@@ -15,7 +15,7 @@
       <!-- main concern cards -->
       <div class="concerns-grid">
         <div v-for="c in concerns" :key="c.title" class="concern-card">
-          <div class="concern-icon">{{ c.icon }}</div>
+
           <div class="concern-body">
             <h3>{{ c.title }}</h3>
             <p>{{ c.desc }}</p>
@@ -30,7 +30,7 @@
       <!-- legal table -->
       <div class="legal-section">
         <h3>Where does the law stand?</h3>
-        <p class="legal-intro">Regulation exists — but it moves slower than the technology.</p>
+        <p class="legal-intro">Regulation exists, but it moves slower than the technology.</p>
         <table class="legal-table">
           <thead>
             <tr>
@@ -65,25 +65,6 @@
         </div>
       </div>
 
-      <!-- reflection block -->
-      <div class="reflection">
-        <div class="reflection-label">our take — as the people who built this</div>
-        <p>
-          Building IRIS was straightforward. That's kind of the point. Using open-source face recognition
-          libraries, public scraping tools, and free API tiers, this prototype took a few days to put together.
-          That same pipeline, pointed at real data, would be genuinely invasive.
-        </p>
-        <p>
-          The goal of this project isn't to enable surveillance — it's to make the threat concrete.
-          Saying "facial recognition is dangerous" is abstract. Watching a fake profile appear from a
-          single photo makes it real.
-        </p>
-        <p>
-          If you walked past someone on the street wearing smart glasses, you'd never know
-          if they'd just looked up your employer, address, and phone number. That's the problem.
-        </p>
-      </div>
-
       <div class="bottom-nav">
         <RouterLink to="/demo" class="btn-ghost">← Back to demo</RouterLink>
       </div>
@@ -107,7 +88,7 @@ const concerns = [
   {
     icon: '🔗',
     title: 'Aggregation makes it serious',
-    desc: 'No single data source is that alarming — LinkedIn shows your employer, Instagram might show your neighborhood. But when a system combines 10+ sources in real time, the result is a profile more detailed than most background checks.',
+    desc: 'No single data source is that alarming. LinkedIn shows your employer, Instagram might show your neighborhood. But when a system combines 10+ sources in real time, the result is a profile more detailed than most background checks.',
   },
   {
     icon: '🎯',
@@ -116,20 +97,20 @@ const concerns = [
   },
   {
     icon: '⚖️',
-    title: 'GDPR helps — but has limits',
+    title: 'GDPR helps, but has limits',
     desc: 'GDPR classifies biometric data as sensitive and requires explicit consent for processing. But enforcement is slow, cross-border data flows are hard to regulate, and many actors operate outside EU jurisdiction entirely.',
   },
   {
     icon: '🏛️',
     title: 'Mission creep in legitimate use',
-    desc: 'Even systems built for legitimate purposes — law enforcement, fraud prevention — tend to expand beyond their original scope. Once the infrastructure exists, the question of who gets access and under what conditions becomes political.',
+    desc: 'Even systems built for legitimate purposes: law enforcement, fraud prevention, etcetera tend to expand beyond their original scope. Once the infrastructure exists, the question of who gets access and under what conditions becomes political.',
   },
 ]
 
 const legal = [
   {
     framework: 'GDPR (EU)',
-    covers: 'Biometric data is "special category" — requires explicit consent to process',
+    covers: 'Biometric data is "special category"; It requires explicit consent to process',
     gap: 'Hard to enforce on foreign companies; individuals rarely know their data is being processed',
   },
   {

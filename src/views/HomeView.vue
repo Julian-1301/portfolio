@@ -12,7 +12,7 @@
           <h1>A face.<br>A full profile.<br><span class="red">In seconds.</span></h1>
           <p class="hero-desc">
             IRIS shows how combining smart glasses footage with public photo databases
-            can expose someone's name, employer, age, and location — without their knowledge.
+            can expose someone's name, employer, age, and location. All without their knowledge.
             This is a prototype. The technology is real.
           </p>
           <div class="cta-row">
@@ -92,8 +92,12 @@ onMounted(() => {
 
 const features = [
   { num: '01', title: 'Passive capture', desc: 'Meta Ray-Ban glasses record without visible indication. No consent, no notification, no opt-out.' },
-  { num: '02', title: 'Face vectorization', desc: 'A 128-float embedding uniquely fingerprints each face. This is how every modern face recognition system works.' },
-  { num: '03', title: 'Cross-platform matching', desc: 'LinkedIn, Instagram, GitHub, public registries — scraped and indexed. Your public photos are the database.' },
+  {
+    num: '02',
+    title: 'Face extraction',
+    desc: 'The face is cropped and aligned into a clean image, ready to be used for reverse image search.'
+  },
+  { num: '03', title: 'Cross-platform matching', desc: 'LinkedIn, Instagram, GitHub, public registries. All scraped and indexed. Your public photos are the database.' },
   { num: '04', title: 'Profile aggregation', desc: 'Name, age, employer, email, home city. Assembled from fragments across a dozen sources in under a second.' },
 ]
 </script>

@@ -5,7 +5,7 @@
       <div class="page-header">
         <span class="section-tag">technical breakdown</span>
         <h2>How IRIS works</h2>
-        <p>A quick walkthrough of the pipeline — from a photo to a full profile.</p>
+        <p>A quick walkthrough of the pipeline. From a photo to a full profile.</p>
       </div>
 
       <!-- pipeline steps -->
@@ -66,33 +66,35 @@ const steps = [
   {
     title: 'Capture',
     badge: 'input layer',
-    desc: 'A photo or video frame is captured passively — via Meta Ray-Ban glasses, a phone, or any camera. The subject has no idea.',
+    desc: 'A photo or video frame is captured passively via Meta Ray-Ban glasses, a phone, or any camera. The subject has no idea.',
     detailLabel: 'Hardware used in real deployments',
     detail: `<span class="mono-chip">Meta Ray-Ban Smart Glasses</span>
              <span class="mono-chip">iPhone / Android</span>
-             <span class="mono-chip">CCTV feed</span>
              <span class="mono-chip">Laptop webcam</span>`,
   },
   {
-    title: 'Face detection & vectorization',
+    title: 'Face Extraction & Normalization',
     badge: 'ML layer',
-    desc: 'A face detection model (like MTCNN or MediaPipe) locates the face in the frame, aligns it, and feeds it through a recognition network (FaceNet, ArcFace, etc.) that outputs a 128-float embedding vector.',
-    detailLabel: 'Example embedding (truncated)',
-    detail: `<span class="code-line">[ 0.231, -0.874, 0.412, 0.099, -0.553, 0.787, ... ]</span>
-             <span class="code-note">// 128 values. this is the face's unique fingerprint.</span>`,
+    desc: 'A face detection model identifies the face in the image, crops it, and aligns it to a standardized format.\n' +
+        '\n' +
+        'Instead of generating a numerical embedding, the system prepares a clean, normalized face image that can be used for downstream search.',
+    detailLabel: 'Processed face output',
+    detail: `<span class="code-line">face_001.jpg → 224x224 aligned crop</span>`
   },
   {
-    title: 'Database matching',
+    title: 'Reverse face search',
     badge: 'search layer',
-    desc: 'The embedding is compared against a pre-built index of embeddings scraped from public profile photos. Similarity is measured with cosine distance. A match above ~0.6 is considered the same person.',
-    detailLabel: 'Cosine similarity threshold',
-    detail: `<span class="code-line">similarity(a, b) = dot(a,b) / (||a|| × ||b||)</span>
-             <span class="code-note">// threshold > 0.6 → match confirmed</span>`,
+    desc: 'Rather than matching against a pre-built local database, the embedding is submitted to a reverse face search engine that crawls the public web in real time. This means anyone who has ever appeared in a public photo online is potentially identifiable without any prior indexing needed.',
+    detailLabel: 'Services used in real deploymets',
+    detail: `<span class="mono-chip">PimEyes</span>
+           <span class="mono-chip">Google Reverse Image</span>
+           <span class="mono-chip">Clearview AI (law enforcement)</span>
+           <span class="mono-chip">FaceCheck.ID</span>`,
   },
   {
     title: 'Profile aggregation',
     badge: 'output layer',
-    desc: 'Once a face is matched to a name, a crawler pulls all associated public data — LinkedIn, employer site, GitHub, government registries — and assembles it into a single profile object.',
+    desc: 'Once a face is matched to a name, a crawler pulls all associated public data: LinkedIn, employer site, GitHub, government registries and assembles it into a single profile object.',
     detailLabel: 'Example output object',
     detail: `<span class="code-line">{ name: "Sophie de Vries",</span>
              <span class="code-line">&nbsp;&nbsp;age: 31, employer: "Booking.com",</span>
