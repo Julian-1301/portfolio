@@ -21,8 +21,8 @@ export const projects = [
         description: 'A text-based adventure game about existing in the spaces between moments.',
         fullDescription: 'In Between Times is a narrative-driven text adventure where players navigate through metaphysical spaces between time.',
         tags: ['JavaScript', 'HTML/CSS', 'Game Design'],
-        localPath: '/projects/in-between-times/index.html',
-        github: 'https://github.com/yourusername/in-between-times',
+        localPath: 'https://julian-1301.github.io/inbetweentimes/',
+        github: 'https://julian-1301.github.io/inbetweentimes/',
         color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         details: [
             'Branching narrative with 6 endings',
@@ -106,25 +106,6 @@ export const projects = [
     },
     {
         id: 7,
-        title: 'Bakery Website Template',
-        description: 'A modern, responsive bakery website template featuring product showcase, about section, and contact form.',
-        fullDescription: 'This bakery website template was designed for a local bakery business. It features a beautiful hero section with call-to-action, product gallery with pricing, about us story, customer testimonials, and a contact form. Fully responsive and ready to be customized for any bakery or cafe business.',
-        tags: ['HTML', 'CSS', 'JavaScript', 'Responsive Design'],
-        localPath: '/projects/bakery-template/index.html',
-        github: 'https://github.com/yourusername/bakery-template',
-        color: 'linear-gradient(135deg, #fdf3c0 0%, #f0c640 100%)',
-        details: [
-            'Responsive design (mobile-first)',
-            'Product showcase with gallery',
-            'About section with story',
-            'Customer testimonials',
-            'Contact form',
-            'Smooth scrolling navigation',
-            'Optimized for local bakeries'
-        ]
-    },
-    {
-        id: 8,
         title: 'IRIS',
         description: 'A research prototype exploring privacy and surveillance concerns around smart glasses and facial recognition technology.',
         fullDescription: 'IRIS is an ethical research project that demonstrates how smart glasses with facial recognition could be misused in wrong hands. The website simulates real-time facial recognition, data collection, and privacy invasion scenarios to raise awareness about surveillance capitalism, data privacy, and the ethical implications of emerging technology. Created as part of a research prototype at the Hogeschool van Amsterdam.',
@@ -143,8 +124,8 @@ export const projects = [
         ]
     },
     {
-        id: 9,
-        title: 'Corrupted Visions',
+        id: 8,
+        title: 'Corrupted Visions (Dark Tech)',
         description: 'An educational workshop tool about smart glasses privacy and ethics, developed for SURF to be used in school environments.',
         fullDescription: 'Corrupted Visions is an educational project developed for SURF, the Dutch collaborative organization for ICT in education and research. This interactive workshop tool helps students understand the privacy implications and ethical concerns of smart glasses and facial recognition technology in school environments. Through scenarios, discussions, and interactive demonstrations, students learn about digital privacy, surveillance, and responsible technology use.',
         tags: ['Educational', 'Privacy', 'Workshop Tool', 'SURF', 'Ethics'],
