@@ -1,0 +1,163 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  font-feature-settings: 'tnum';
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,
+ol,
+dl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+p,
+dd,
+figure {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--pop);
+  color: var(--pop-ink);
+}
+
+/* a change of pace: pale green ground */
+.tinted {
+  --line: var(--tint-line);
+  background: var(--tint);
+}
+
+/* anchored sections stop below the sticky nav */
+[id] {
+  scroll-margin-top: 72px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* layout helpers */
+.wrap {
+  padding-inline: var(--gutter);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+
+/* the bottle green poster block (hero and contact) */
+.field {
+  --line: var(--field-line);
+  --muted: var(--field-muted);
+  --accent: var(--field-ink);
+  --accent-ink: var(--field);
+  background: var(--field);
+  color: var(--field-ink);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.skip-link:focus {
+  top: var(--space-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+  }
+}
+
+/*
+  The growing underline used across the site (nav, project titles, email).
+  It sits below the descenders and grows from the left in the accent color.
+  Put .grow-line on the text; it grows when the element itself or a parent link is hovered or focused.
+*/
+.grow-line {
+  position: relative;
+  padding-bottom: var(--grow-gap, 0.12em);
+}
+
+.grow-line::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 var(--grow-lift, 0);
+  height: var(--grow-size, max(2px, 0.06em));
+  background: var(--pop);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+a:hover .grow-line::after,
+a:focus-visible .grow-line::after,
+a.grow-line:hover::after,
+a.grow-line:focus-visible::after {
+  transform: scaleX(1);
+}
