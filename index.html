@@ -1,13 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio Julian</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#1d5a41" />
+    <title>Julian van der Linde, software engineer</title>
+    <meta
+      name="description"
+      content="Julian van der Linde is a software engineering student with a background in UX and interface design. He designs interfaces and builds them."
+    />
+    <meta property="og:title" content="Julian van der Linde, software engineer" />
+    <meta
+      property="og:description"
+      content="Software engineer with a background in UX and interface design."
+    />
+    <meta property="og:type" content="website" />
+    <script>
+      // Set the saved theme before the first paint so the page never flashes the wrong one.
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark'
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

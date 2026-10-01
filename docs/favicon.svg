@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-    <rect width="100" height="100" rx="20" fill="#f0c640"/>
-    <text x="50" y="68" font-size="42" text-anchor="middle" fill="#1a1814" font-family="'Fraunces', Georgia, serif" font-weight="700" letter-spacing="-0.02">JVL</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#1d5a41"/><path d="M16 14h10v24a12 12 0 0 1-12 12h-2v-9h2a3 3 0 0 0 3-3V14Zm16 0h9v27h13v9H32V14Z" fill="#eef0e6"/></svg>
