@@ -17,6 +17,8 @@ export interface WeightFieldOptions {
  * which rises smoothly towards the pointer's influence and decays over time when it leaves.
 
  * The pointer is tracked over the nearest ancestor with data-weight-area, or `root` itself.
+ * A mouse inks wherever it hovers; a finger inks where it touches and drags, and the ink dries
+ * once it lifts.
  */
 export function useWeightField(root: Ref<HTMLElement | null>, options: WeightFieldOptions = {}) {
   const { min = 500, max = 700, reach = 1.2, dry = 1400 } = options
@@ -71,15 +73,27 @@ export function useWeightField(root: Ref<HTMLElement | null>, options: WeightFie
     if (!frame) frame = requestAnimationFrame(tick)
   }
 
+  let lift = 0
+
   const onMove = (e: PointerEvent) => {
     sweeping = false
+    clearTimeout(lift)
     pointer = { x: e.clientX, y: e.clientY }
     run()
   }
 
   const onLeave = () => {
+    clearTimeout(lift)
     pointer = null
     run()
+  }
+
+  // a mouse keeps inking while it hovers; a finger presses the ink in for a moment after it lifts,
+  // so even a quick tap leaves a mark that then dries
+  const onUp = (e: PointerEvent) => {
+    if (e.pointerType === 'mouse') return
+    clearTimeout(lift)
+    lift = window.setTimeout(onLeave, 280)
   }
 
   const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -103,20 +117,27 @@ export function useWeightField(root: Ref<HTMLElement | null>, options: WeightFie
     requestAnimationFrame(step)
   }
 
+  const events: [string, (e: PointerEvent) => void][] = [
+    ['pointerdown', onMove],
+    ['pointermove', onMove],
+    ['pointerup', onUp],
+    // a scroll taking over the touch ends it like a lift
+    ['pointercancel', onUp],
+    ['pointerleave', (e) => e.pointerType === 'mouse' && onLeave()],
+  ]
+
   onMounted(() => {
     const el = root.value
-    const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches
-    if (!el || !canHover || reduceMotion()) return
+    if (!el || reduceMotion()) return
 
     area = el.closest<HTMLElement>('[data-weight-area]') ?? el
-    area.addEventListener('pointermove', onMove)
-    area.addEventListener('pointerleave', onLeave)
+    for (const [name, handler] of events) area.addEventListener(name, handler as EventListener)
   })
 
   onBeforeUnmount(() => {
-    area?.removeEventListener('pointermove', onMove)
-    area?.removeEventListener('pointerleave', onLeave)
+    for (const [name, handler] of events) area?.removeEventListener(name, handler as EventListener)
     cancelAnimationFrame(frame)
+    clearTimeout(lift)
     sweeping = false
   })
 

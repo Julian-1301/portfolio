@@ -3,7 +3,8 @@ import { computed, ref } from 'vue'
 import { useWeightField } from '../composables/useWeightField'
 
 /**
- * Display text with an ink trail: letters get heavier where the pointer passes and slowly dry back.
+ * Display text with an ink trail: letters get heavier where the pointer or a finger passes and
+ * slowly dry back.
  * Put data-weight-area on a parent to track the pointer over that whole block.
  * On touch screens the text settles from light to its resting weight while scrolling into view.
  */
@@ -20,7 +21,7 @@ const props = withDefaults(
     /** Settle from light to resting weight on scroll (touch screens only). */
     settle?: boolean
   }>(),
-  { as: 'span', min: 500, max: 700, reach: 1, dry: 1600, settle: true },
+  { as: 'span', min: 500, max: 700, reach: 1.3, dry: 2400, settle: true },
 )
 
 const root = ref<HTMLElement | null>(null)
@@ -66,11 +67,14 @@ defineExpose({ sweep })
   font-weight: var(--rest);
 }
 
-/* touch screens have no pointer, so the type settles as it scrolls into view instead */
+/*
+  On touch screens the type also settles from light to its resting weight as it scrolls into view.
+  The animation only holds its start state (backwards), so once it has played a finger can ink it.
+*/
 @supports (animation-timeline: view()) {
   @media (hover: none) and (prefers-reduced-motion: no-preference) {
     .settle .char {
-      animation: settle linear both;
+      animation: settle linear backwards;
       animation-timeline: view();
       animation-range: entry 10% cover 45%;
     }

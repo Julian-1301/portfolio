@@ -5,16 +5,20 @@ const en = {
   navAbout: 'About',
   navContact: 'Contact',
   navMain: 'Main',
-  switchLanguage: 'Switch to Dutch',
+  switchLanguage: 'switch to Dutch',
   themeDark: 'Dark',
   themeLight: 'Light',
   themeLabel: 'Switch to the dark theme',
   themeLabelLight: 'Switch to the light theme',
 
   factStudy: 'Study',
+  factInShort: 'In short',
+  factLatest: 'Latest project',
+  factAvailable: 'Available',
+  factBasedIn: 'Based in',
 
   projectsTitle: 'Projects',
-  projectsNote: 'A selection of university, client and personal work.',
+  projectsNote: 'Each one with what was hard and how I solved it.',
   projectsEmpty:
     'The projects are being rebuilt one at a time, each with a proper case study. They will appear here as they are finished.',
 
@@ -27,7 +31,7 @@ const en = {
   portraitAlt: 'Portrait of Julian van der Linde',
 
   contactAsk:
-    'Looking for an intern or junior developer who also designs? Email is the quickest way to reach me.',
+    'Looking for an intern or junior software engineer? Email is the quickest way to reach me.',
 
   projectBack: 'All projects',
   projectRole: 'Role',
@@ -37,9 +41,18 @@ const en = {
   projectLive: 'Open the live site',
   projectRepo: 'View the code',
   projectNext: 'Next project',
+  projectRead: 'Read the case study',
+  projectNotes: 'Problems and fixes',
+  projectChapters: 'Chapters',
+  mediaOpen: 'Open full size',
+  mediaStrip: 'Phone screens, scroll sideways for more',
+  projectSummary: 'Summary',
+  projectCode: 'Code',
+  projectCodeSoon: 'The repository goes public soon.',
+  projectSite: 'Live site',
 
   notFoundTitle: 'Page not found',
-  notFoundBody: 'This page does not exist, or it moved while the site was being rebuilt.',
+  notFoundBody: 'There is no page at this address. The projects and my contact details are on the homepage.',
   notFoundHome: 'Back to the homepage',
 }
 
@@ -49,16 +62,20 @@ const nl: typeof en = {
   navAbout: 'Over mij',
   navContact: 'Contact',
   navMain: 'Hoofdmenu',
-  switchLanguage: 'Switch to English',
+  switchLanguage: 'switch to English',
   themeDark: 'Donker',
   themeLight: 'Licht',
   themeLabel: 'Schakel naar het donkere thema',
   themeLabelLight: 'Schakel naar het lichte thema',
 
   factStudy: 'Opleiding',
+  factInShort: 'In het kort',
+  factLatest: 'Nieuwste project',
+  factAvailable: 'Beschikbaar',
+  factBasedIn: 'Locatie',
 
   projectsTitle: 'Projecten',
-  projectsNote: 'Een selectie van studie-, klant- en eigen werk.',
+  projectsNote: 'Elk met wat er lastig was en hoe ik het oploste.',
   projectsEmpty:
     'De projecten worden een voor een opnieuw opgebouwd, elk met een uitgebreide case study. Ze verschijnen hier zodra ze af zijn.',
 
@@ -71,7 +88,7 @@ const nl: typeof en = {
   portraitAlt: 'Portret van Julian van der Linde',
 
   contactAsk:
-    'Op zoek naar een stagiair of junior developer die ook ontwerpt? Mail is de snelste manier om mij te bereiken.',
+    'Op zoek naar een stagiair of junior software engineer? Mail is de snelste manier om mij te bereiken.',
 
   projectBack: 'Alle projecten',
   projectRole: 'Rol',
@@ -81,9 +98,18 @@ const nl: typeof en = {
   projectLive: 'Bekijk de live site',
   projectRepo: 'Bekijk de code',
   projectNext: 'Volgend project',
+  projectRead: 'Lees de case study',
+  projectNotes: 'Problemen en oplossingen',
+  projectChapters: 'Hoofdstukken',
+  mediaOpen: 'Open op ware grootte',
+  mediaStrip: 'Telefoonschermen, scroll opzij voor meer',
+  projectSummary: 'Samenvatting',
+  projectCode: 'Code',
+  projectCodeSoon: 'De repository komt binnenkort online.',
+  projectSite: 'Live site',
 
   notFoundTitle: 'Pagina niet gevonden',
-  notFoundBody: 'Deze pagina bestaat niet, of is verplaatst tijdens het herbouwen van de site.',
+  notFoundBody: 'Op dit adres staat geen pagina. De projecten en mijn contactgegevens staan op de homepage.',
   notFoundHome: 'Terug naar de homepage',
 }
 

@@ -16,7 +16,6 @@ body {
   font-family: var(--font);
   font-size: var(--step-0);
   line-height: 1.5;
-  font-feature-settings: 'tnum';
   -webkit-font-smoothing: antialiased;
   transition:
     background-color var(--dur) var(--ease),
@@ -56,6 +55,11 @@ button {
   color: inherit;
 }
 
+/* numbers that line up in a column use equal-width figures; running text keeps proportional ones */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
 ::selection {
   background: var(--pop);
   color: var(--pop-ink);
@@ -67,14 +71,19 @@ button {
   background: var(--tint);
 }
 
-/* anchored sections stop below the sticky nav */
+/* anchored sections stop below the sticky nav, whatever its measured height */
 [id] {
-  scroll-margin-top: 72px;
+  scroll-margin-top: calc(var(--nav-h) + var(--space-4));
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+/* main only takes focus after a page change, as a starting point; it needs no ring */
+main:focus {
+  outline: none;
 }
 
 /* layout helpers */

@@ -54,7 +54,7 @@ const tables = computed(() => [
         <ul>
           <li v-for="(row, i) in table.rows" :key="i">
             <span class="main">{{ row.main }}</span>
-            <span class="end">{{ row.end }}</span>
+            <span class="end num">{{ row.end }}</span>
             <span class="sub">{{ row.sub }}</span>
           </li>
         </ul>
@@ -79,11 +79,12 @@ const tables = computed(() => [
 }
 
 .bio p {
-  max-width: 30ch;
+  max-width: 34ch;
+  font-family: var(--font-read);
   font-size: var(--step-2);
-  font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.015em;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 .bio p + p {

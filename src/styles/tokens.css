@@ -14,18 +14,28 @@
 
   --field: #1d5a41;
   --field-ink: #eef0e6;
-  --field-muted: #a9c4b5;
+  /* 4.96:1 on --field, so small labels on the green pass AA */
+  --field-muted: #b8d0c2;
   --field-line: #3f7a61;
 
   /* pale green ground for sections that need a change of pace */
   --tint: #dde6da;
   --tint-line: #c3d0c0;
 
+  /* the dark mat screenshots sit on in a case study, like prints on a lightbox */
+  --mat: #262b28;
+  --mat-ink: #e8e6e0;
+  --mat-muted: #9aa19c;
+
   /* the small, bright 10%: growing underlines, the CV button and text selection */
   --pop: #ff7a50;
   --pop-ink: #1a1410;
 
   --font: 'Familjen Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+  /* reading text: bio, summaries and case studies */
+  --font-read: 'Source Serif 4 Variable', Georgia, serif;
+  /* only for real code excerpts */
+  --font-code: ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, monospace;
 
   --step--1: 0.875rem;
   --step-0: 1rem;
@@ -70,8 +80,11 @@
   --field-muted: #8fb3a0;
   --field-line: #2d5c47;
 
-  --tint: #19221d;
-  --tint-line: #2a362f;
+  /* a visible step up from --bg (1.28:1), so the About band still reads as a change of pace */
+  --tint: #1f2d25;
+  --tint-line: #31433a;
+
+  --mat: #232825;
 
   --pop: #ff8a63;
   --pop-ink: #1a1410;

@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from '../i18n'
 import { useTheme } from '../composables/useTheme'
 import { useOverField } from '../composables/useOverField'
+import { useTuckOnScroll } from '../composables/useTuckOnScroll'
 import { site } from '../content/site'
 
 const { t, locale, toggleLocale } = useI18n()
@@ -10,6 +11,7 @@ const { isDark, toggleTheme } = useTheme()
 
 const bar = ref<HTMLElement | null>(null)
 const overField = useOverField(bar)
+const tucked = useTuckOnScroll(bar)
 
 // share the nav height, so the hero can fill exactly one screen below it
 let observer: ResizeObserver | undefined
@@ -33,38 +35,40 @@ const links = [
 </script>
 
 <template>
-  <header ref="bar" class="nav wrap" :class="{ 'on-field': overField }">
+  <header ref="bar" class="nav wrap" :class="{ 'on-field': overField, tucked }">
     <div class="bar">
       <RouterLink class="who swell" to="/" :data-label="site.name" translate="no">
         <span>{{ site.name }}</span>
       </RouterLink>
 
       <nav class="links" :aria-label="t('navMain')">
+        <!--
+          Section links render their own <a>: RouterLink would mark every #link as the current
+          page on the homepage, because it ignores the hash. Only the name link carries aria-current.
+        -->
         <RouterLink
           v-for="link in links"
           :key="link.hash"
-          class="swell"
+          v-slot="{ href, navigate }"
           :to="{ path: '/', hash: link.hash }"
-          :data-label="t(link.key)"
+          custom
         >
-          <span>{{ t(link.key) }}</span>
+          <a class="swell" :href="href" :data-label="t(link.key)" @click="navigate">
+            <span>{{ t(link.key) }}</span>
+          </a>
         </RouterLink>
       </nav>
 
       <div class="tools">
-        <button
-          type="button"
-          class="tool lang"
-          :aria-label="t('switchLanguage')"
-          @click="toggleLocale"
-        >
+        <!-- the accessible name starts with the visible "EN / NL", then says what it does -->
+        <button type="button" class="tool lang" @click="toggleLocale">
           <span :class="{ on: locale === 'en' }">EN</span> /
-          <span :class="{ on: locale === 'nl' }">NL</span>
+          <span :class="{ on: locale === 'nl' }">NL</span
+          ><span class="visually-hidden" lang="en">, {{ t('switchLanguage') }}</span>
         </button>
         <button
           type="button"
           class="tool"
-          :aria-pressed="isDark"
           :aria-label="isDark ? t('themeLabelLight') : t('themeLabel')"
           @click="toggleTheme"
         >
@@ -85,10 +89,14 @@ const links = [
   color: var(--ink);
   transition:
     background-color var(--dur) var(--ease),
-    color var(--dur) var(--ease);
+    color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
 }
 
+/* over a green block the nav takes the block's colors, focus ring included */
 .nav.on-field {
+  --accent: var(--field-ink);
+  --muted: var(--field-muted);
   background: var(--field);
   color: var(--field-ink);
 }
@@ -158,7 +166,8 @@ const links = [
   transition: transform var(--dur) var(--ease);
 }
 
-.links a:hover::after {
+.links a:hover::after,
+.links a:focus-visible::after {
   transform: scaleX(1);
 }
 
@@ -174,28 +183,40 @@ const links = [
   border: 0;
   background: none;
   cursor: pointer;
-  opacity: 0.65;
-  transition: opacity var(--dur-fast) var(--ease);
+  color: var(--muted);
+  transition: color var(--dur-fast) var(--ease);
 }
 
 .tool:hover {
-  opacity: 1;
+  color: inherit;
 }
 
-.tool span {
-  opacity: 0.65;
-}
-
-.tool span.on {
-  opacity: 1;
-}
-
+/* language: both codes stay visible, the active one in full ink, the other muted */
 .lang {
-  opacity: 1;
+  color: inherit;
+}
+
+.lang span {
+  color: var(--muted);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.lang span.on {
+  color: inherit;
+}
+
+.lang:hover span {
+  color: inherit;
 }
 
 @media (max-width: 860px) {
+  /* on a phone the two-row bar slides away while reading down, and comes back on the way up */
+  .nav.tucked {
+    transform: translateY(-100%);
+  }
+
   .bar {
+    padding-block: var(--space-3);
     grid-template-columns: 1fr auto;
     row-gap: var(--space-2);
   }

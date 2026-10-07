@@ -12,18 +12,19 @@ watchEffect(() => {
   document
     .querySelector('meta[name="theme-color"]')
     ?.setAttribute('content', THEME_COLOR[theme.value])
-  try {
-    localStorage.setItem(STORAGE_KEY, theme.value)
-  } catch {
-    // Storage blocked: the theme still switches, it just isn't remembered.
-  }
 })
 
 export function useTheme() {
   return {
     isDark: computed(() => theme.value === 'dark'),
+    // only a deliberate switch is remembered; until then the system setting decides (see index.html)
     toggleTheme: () => {
       theme.value = theme.value === 'dark' ? 'light' : 'dark'
+      try {
+        localStorage.setItem(STORAGE_KEY, theme.value)
+      } catch {
+        // Storage blocked: the theme still switches, it just isn't remembered.
+      }
     },
   }
 }

@@ -5,6 +5,8 @@ import { getProject, nextProject } from '../content/projects'
 import { site } from '../content/site'
 import MediaGroup from '../components/MediaGroup.vue'
 import WeightText from '../components/WeightText.vue'
+import FigureRow from '../components/FigureRow.vue'
+import CodeExcerpt from '../components/CodeExcerpt.vue'
 import ContactSection from '../components/ContactSection.vue'
 import NotFoundView from './NotFoundView.vue'
 
@@ -45,7 +47,7 @@ watch(
 
       <dl class="facts grid">
         <div class="summary">
-          <dt class="visually-hidden">{{ project.title }}</dt>
+          <dt class="visually-hidden">{{ t('projectSummary') }}</dt>
           <dd>{{ l(project.summary) }}</dd>
         </div>
         <div class="fact role">
@@ -64,25 +66,56 @@ watch(
           <dt>{{ t('projectYear') }}</dt>
           <dd>{{ project.year }}</dd>
         </div>
-        <div v-if="project.links.live || project.links.repo" class="links">
-          <a v-if="project.links.live" :href="project.links.live" target="_blank" rel="noopener">
-            <span class="grow-line">{{ t('projectLive') }}</span> ↗
-          </a>
-          <a v-if="project.links.repo" :href="project.links.repo" target="_blank" rel="noopener">
-            <span class="grow-line">{{ t('projectRepo') }}</span> ↗
-          </a>
+        <!-- engineers look for the code first, so it always has a fact, even before it is public -->
+        <div class="fact code">
+          <dt>{{ t('projectCode') }}</dt>
+          <dd>
+            <a v-if="project.links.repo" :href="project.links.repo" target="_blank" rel="noopener">
+              <span class="grow-line">{{ t('projectRepo') }}</span> ↗
+            </a>
+            <span v-else class="soon">{{ t('projectCodeSoon') }}</span>
+          </dd>
+        </div>
+        <div v-if="project.links.live" class="fact site">
+          <dt>{{ t('projectSite') }}</dt>
+          <dd>
+            <a :href="project.links.live" target="_blank" rel="noopener">
+              <span class="grow-line">{{ t('projectLive') }}</span> ↗
+            </a>
+          </dd>
         </div>
       </dl>
+
+      <FigureRow v-if="project.figures" class="intro-figures" :figures="project.figures" />
     </header>
 
     <article class="case wrap">
       <!-- the cover overlaps the green block, like a print laid on top of the page -->
-      <MediaGroup class="cover" :slug="project.slug" :media="project.cover" eager />
+      <MediaGroup
+        class="cover"
+        :slug="project.slug"
+        :media="project.hero ?? project.cover"
+        matted
+        zoomable
+        eager
+      />
+
+      <!-- a map of the case study, so a reader looking for one part (the problems, the reflection) jumps there -->
+      <nav class="chapters" :aria-label="t('projectChapters')">
+        <ol>
+          <li v-for="(section, i) in project.sections" :key="`toc-${project.slug}-${i}`">
+            <RouterLink :to="{ hash: `#chapter-${i}` }">
+              <span class="grow-line">{{ l(section.heading) }}</span>
+            </RouterLink>
+          </li>
+        </ol>
+      </nav>
 
       <section
         v-for="(section, i) in project.sections"
         :key="`${project.slug}-${i}`"
         class="chapter grid"
+        :class="{ ledger: section.notes }"
         :aria-labelledby="`chapter-${i}`"
       >
         <h2 :id="`chapter-${i}`" class="chapter-title" data-weight-area>
@@ -91,11 +124,20 @@ watch(
         <div class="text">
           <p v-for="(para, j) in section.paragraphs" :key="j">{{ l(para) }}</p>
         </div>
+        <ol v-if="section.notes" class="notes" :aria-label="t('projectNotes')">
+          <li v-for="(note, j) in section.notes" :key="j">
+            <h3>{{ l(note.title) }}</h3>
+            <p>{{ l(note.body) }}</p>
+          </li>
+        </ol>
+        <CodeExcerpt v-if="section.code" class="chapter-code" :code="section.code" />
         <MediaGroup
           v-if="section.media"
           class="chapter-media"
           :slug="project.slug"
           :media="section.media"
+          matted
+          zoomable
         />
       </section>
 
@@ -159,6 +201,7 @@ watch(
 .summary {
   grid-column: 1 / 5;
   padding-right: var(--space-8);
+  font-family: var(--font-read);
   font-size: var(--step-1);
   line-height: 1.35;
 }
@@ -175,10 +218,20 @@ watch(
   grid-column: 12 / 13;
 }
 
-.links {
-  grid-column: 6 / 13;
-  display: flex;
-  gap: var(--space-6);
+.code {
+  grid-column: 6 / 8;
+}
+
+.site {
+  grid-column: 8 / 10;
+}
+
+.soon {
+  color: var(--muted);
+}
+
+.intro-figures {
+  margin-top: var(--space-16);
 }
 
 .case {
@@ -187,6 +240,26 @@ watch(
 
 .cover {
   margin-top: calc(var(--space-24) * -1);
+}
+
+.chapters {
+  margin-top: var(--space-16);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+}
+
+.chapters ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.chapters a {
+  display: inline-block;
+  padding-block: var(--space-2);
+  font-weight: 500;
 }
 
 .chapter {
@@ -209,13 +282,71 @@ watch(
 }
 
 .text p {
-  max-width: 62ch;
+  max-width: 60ch;
+  font-family: var(--font-read);
   font-size: var(--step-1);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .text p + p {
   margin-top: var(--space-4);
+}
+
+/*
+  The chapter with numbered problems breaks the rhythm on purpose: a full-width pale green band
+  where the problems sit side by side like a ledger, the number in the margin of each.
+*/
+.ledger {
+  margin-inline: calc(var(--gutter) * -1);
+  padding: var(--space-4) var(--gutter) var(--space-16);
+  border-top: 0;
+  background: var(--tint);
+  --line: var(--tint-line);
+}
+
+.notes {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  counter-reset: note;
+}
+
+.notes li {
+  counter-increment: note;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  column-gap: var(--space-4);
+  align-content: start;
+  padding-block: var(--space-6) var(--space-8);
+  border-top: 1px solid var(--ink);
+}
+
+.notes li::before {
+  content: counter(note, decimal-leading-zero);
+  grid-row: span 2;
+  color: var(--accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+}
+
+.notes h3 {
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.notes p {
+  max-width: 52ch;
+  margin-top: var(--space-2);
+  font-family: var(--font-read);
+  line-height: 1.55;
+}
+
+.chapter-code {
+  grid-column: 1 / -1;
 }
 
 .chapter-media {
@@ -247,7 +378,6 @@ watch(
   .summary,
   .role,
   .year,
-  .links,
   .chapter-title,
   .text {
     grid-column: 1 / -1;
@@ -256,6 +386,10 @@ watch(
 
   .fact {
     grid-column: span 6;
+  }
+
+  .notes {
+    grid-template-columns: 1fr;
   }
 
   .intro {

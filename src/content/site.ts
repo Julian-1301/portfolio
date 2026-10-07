@@ -20,6 +20,10 @@ export interface Site {
   nameLines: [string, string]
   lead: Localized
   study: Localized
+  /** What he is looking for and from when, shown in the hero. null hides it. */
+  availability: Localized | null
+  /** Where he is based, shown in the hero. null hides it. */
+  location: Localized | null
   email: string
   linkedin: string | null
   github: string | null
@@ -40,13 +44,19 @@ export const site: Site = {
   nameLines: ['Julian van', 'der Linde'],
 
   lead: {
-    en: 'Software engineer with a background in UX and interface design. I build frontends in Vue and TypeScript, and design them first.',
-    nl: 'Software engineer met een achtergrond in UX en interfacedesign. Ik bouw frontends in Vue en TypeScript, en ontwerp ze eerst.',
+    en: 'Software engineer who takes a project from raw data to the screen: pipelines, Vue and TypeScript frontends, and the design in between.',
+    nl: 'Software engineer die een project bouwt van ruwe data tot scherm: pipelines, frontends in Vue en TypeScript, en het ontwerp daartussen.',
   },
   study: {
     en: 'HBO-ICT Software Engineering, Amsterdam University of Applied Sciences',
     nl: 'HBO-ICT Software Engineering, Hogeschool van Amsterdam',
   },
+
+  availability: {
+    en: 'Internship from February 2027',
+    nl: 'Stage vanaf februari 2027',
+  },
+  location: same('Amsterdam'),
 
   email: 'j.van.der.linde@outlook.com',
   linkedin: 'https://www.linkedin.com/in/julianvdlinde',

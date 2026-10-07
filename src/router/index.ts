@@ -19,7 +19,11 @@ export const router = createRouter({
   ],
   scrollBehavior(to, _from, savedPosition) {
     if (savedPosition) return savedPosition
-    if (to.hash) return { el: to.hash }
+    // the router ignores scroll-margin, so leave room for the sticky nav here (same gap as base.css)
+    if (to.hash) {
+      const nav = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'))
+      return { el: to.hash, top: (nav || 57) + 16 }
+    }
     return { top: 0 }
   },
 })

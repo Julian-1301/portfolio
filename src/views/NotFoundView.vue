@@ -1,14 +1,21 @@
 <script setup lang="ts">
+import { watchEffect } from 'vue'
 import { useI18n } from '../i18n'
+import { site } from '../content/site'
 import WeightText from '../components/WeightText.vue'
 
 const { t } = useI18n()
+
+// the tab says what happened, also when a project link is wrong (ProjectView renders this page)
+watchEffect(() => {
+  document.title = `${t('notFoundTitle')}, ${site.name}`
+})
 </script>
 
 <template>
   <main id="main" class="not-found field wrap" tabindex="-1" data-weight-area>
     <div class="grid">
-      <h1><WeightText text="404" :settle="false" :reach="0.8" /></h1>
+      <h1><WeightText text="404" :settle="false" :min="450" :reach="1.1" /></h1>
       <div class="text">
         <h2>{{ t('notFoundTitle') }}</h2>
         <p>{{ t('notFoundBody') }}</p>
@@ -20,7 +27,7 @@ const { t } = useI18n()
 
 <style scoped>
 .not-found {
-  min-height: calc(100svh - 58px);
+  min-height: calc(100svh - var(--nav-h));
   padding-block: var(--space-16);
 }
 

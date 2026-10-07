@@ -1,0 +1,17 @@
+/* ---------- checks: refuse to write data that doesn't add up ---------- */
+
+const missingShapes = municipalities.filter((m) => !provinceByCode.has(m.code))
+const sumValid = municipalities.reduce((s, m) => s + m.valid, 0)
+const problems = [
+  municipalities.length !== 352 && `expected 352 municipalities, got ${municipalities.length}`,
+  missingShapes.length && `no map shape for ${missingShapes.map((m) => m.name).join(', ')}`,
+  sumValid + caribbean.valid + abroad.valid !== national.valid &&
+    `municipal + Caribbean + abroad valid votes != national ${national.valid}`,
+  parties.reduce((s, p) => s + p.seats, 0) !== seatsTotal && 'elected candidates != 150',
+  national.valid + national.blank + national.invalid !== OFFICIAL_2021.turnout &&
+    'ballots in the files differ from the official turnout',
+].filter(Boolean)
+if (problems.length) {
+  console.error(problems.join('\n'))
+  process.exit(1)
+}

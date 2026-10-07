@@ -8,24 +8,27 @@
     <title>Julian van der Linde, software engineer</title>
     <meta
       name="description"
-      content="Julian van der Linde is a software engineering student with a background in UX and interface design. He designs interfaces and builds them."
+      content="Julian van der Linde is a software engineering student in Amsterdam. He builds data pipelines, Vue and TypeScript frontends, and the infrastructure they run on."
     />
     <meta property="og:title" content="Julian van der Linde, software engineer" />
     <meta
       property="og:description"
-      content="Software engineer with a background in UX and interface design."
+      content="Software engineering student in Amsterdam. Data pipelines, Vue and TypeScript frontends, and the infrastructure they run on."
     />
     <meta property="og:type" content="website" />
     <script>
-      // Set the saved theme before the first paint so the page never flashes the wrong one.
+      // Set the theme before the first paint so the page never flashes the wrong one:
+      // the visitor's own choice if they made one, otherwise their system setting.
       try {
-        if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark'
+        var saved = localStorage.getItem('theme')
+        var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
+        if (dark) document.documentElement.dataset.theme = 'dark'
       } catch (e) {}
     </script>
-    <script type="module" crossorigin src="/portfolio/assets/index-C4dJXiZ9.js"></script>
-    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-CYCb83h9.css">
+    <script type="module" crossorigin src="/portfolio/assets/index-Cna8M_h2.js"></script>
+    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-C_cI2uS3.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app"></div>
   </body>
 </html>

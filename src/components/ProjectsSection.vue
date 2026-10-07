@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from '../i18n'
-import { sortedProjects } from '../content/projects'
+import { leadProject, sortedProjects } from '../content/projects'
 import SectionHead from './SectionHead.vue'
 import ProjectCard from './ProjectCard.vue'
+import LeadProject from './LeadProject.vue'
 
 const { t, l } = useI18n()
 const projects = computed(() => sortedProjects())
 const featured = computed(() => projects.value.filter((p) => p.featured))
+// the first featured project leads as a full spread, the others follow in the staggered grid
+const lead = computed(() => leadProject())
+const rest = computed(() => featured.value.filter((p) => p !== lead.value))
 const more = computed(() => projects.value.filter((p) => !p.featured))
 </script>
 
@@ -24,8 +28,10 @@ const more = computed(() => projects.value.filter((p) => !p.featured))
     </div>
 
     <!-- mixed sizes, staggered like a printed spread, so the grid has rhythm -->
-    <ul v-if="featured.length" class="featured grid">
-      <li v-for="project in featured" :key="project.slug">
+    <LeadProject v-if="lead" :project="lead" />
+
+    <ul v-if="rest.length" class="featured grid">
+      <li v-for="project in rest" :key="project.slug">
         <ProjectCard :project="project" />
       </li>
     </ul>
@@ -39,7 +45,7 @@ const more = computed(() => projects.value.filter((p) => !p.featured))
               ><span class="grow-line">{{ project.title }}</span></span
             >
             <span class="context">{{ l(project.context) }}</span>
-            <span class="year">{{ project.year }}</span>
+            <span class="year num">{{ project.year }}</span>
           </RouterLink>
         </li>
       </ul>
@@ -66,6 +72,7 @@ const more = computed(() => projects.value.filter((p) => !p.featured))
 }
 
 .featured {
+  margin-top: var(--space-24);
   padding-top: var(--space-8);
   border-top: 1px solid var(--ink);
   row-gap: var(--space-16);
@@ -153,6 +160,10 @@ const more = computed(() => projects.value.filter((p) => !p.featured))
 }
 
 @media (max-width: 860px) {
+  .section {
+    padding-top: var(--space-8);
+  }
+
   .featured li:nth-child(n) {
     grid-column: 1 / -1;
     margin-top: 0;

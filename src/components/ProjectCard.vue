@@ -15,7 +15,7 @@ const { l } = useI18n()
       <h3 class="title">
         <span class="grow-line">{{ project.title }}</span>
       </h3>
-      <span class="year">{{ project.year }}</span>
+      <span class="year num">{{ project.year }}</span>
       <p class="summary">{{ l(project.summary) }}</p>
       <p class="meta">{{ l(project.context) }}, {{ l(project.discipline) }}</p>
     </div>
@@ -64,6 +64,7 @@ const { l } = useI18n()
 .summary {
   grid-column: 1 / -1;
   max-width: 44ch;
+  font-family: var(--font-read);
   margin-top: var(--space-2);
   color: var(--muted);
 }
