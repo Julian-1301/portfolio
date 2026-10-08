@@ -44,10 +44,15 @@ Open: the hero currently reads "Software engineer with a background in UX and in
 ## Evidence on Hand
 
 - **TK2021 in kaart** (2026, personal project): the 2021 Dutch general election from the official Kiesraad XML. Screenshots in `public/images/projects/tk2021/`. Not yet in a public repository or hosted, so it has no live or repo link yet.
-- Experience: software developer intern at Effytool (2025), IT infrastructure management at Dijklander Ziekenhuis (2023), technical support at De Zorgcirkel (2022).
+- Experience (from his CV, titles as on the CV):
+  - Software Developer Intern, Effytool (2025): developed and maintained backend solutions in C#, new features and optimising existing code, with the team; tested and debugged.
+  - IT Workplace Technician, Dijklander Ziekenhuis (2023): replaced and managed workplace hardware, resolved support tickets, explained IT solutions to healthcare staff.
+  - IT Support Specialist, De Zorgcirkel (2022): guided staff through the move to a new intranet and Office 365, hands-on support and training.
+- Skills (CV): Java, JavaScript, TypeScript, C#, HTML, CSS, Tailwind, REST APIs, PHP, SQL, Spring Boot, Vue.js, Scrum/Agile; plus Node.js data scripts and Vite (shown in TK2021).
+- Also on the CV: VWO at Da Vinci College (2016-2022); Cambridge Certificate in Advanced English (CAE, 2020). His CV profile stresses software development and data analysis.
 - Education: HBO-ICT Software Engineering at the Amsterdam University of Applied Sciences (2023 to now), exchange semester at the University of Michigan School of Information (2025).
 - Languages: Dutch (native), English (C2), German (B2).
-- Availability: looking for an internship from February 2027, based in Amsterdam (shown in the hero, set in `site.ts`).
+- Availability: looking for an internship from February 2027. The site says "Based in: Amsterdam" (his choice; the CV lists Purmerend, near Amsterdam). Set in `site.ts`.
 - Not on hand yet: portrait photo, CV PDF, GitHub profile link. These are switched off in `site.ts` until supplied. Never fabricate testimonials, client logos, metrics or projects.
 
 ## Product Principles

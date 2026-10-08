@@ -125,6 +125,16 @@ const links = [
   transition: font-weight var(--dur) var(--ease);
 }
 
+/*
+  Header links and buttons look 24px tall but take taps over 44px: the padding grows the hit area
+  and the negative margin gives the space back, so the bar itself doesn't change.
+*/
+.swell,
+.tool {
+  padding-block: var(--hit);
+  margin-block: calc(var(--hit) * -1);
+}
+
 .swell > span,
 .swell::before {
   grid-area: 1 / 1;
@@ -158,7 +168,7 @@ const links = [
 .links a::after {
   content: '';
   position: absolute;
-  inset: auto 0 -2px;
+  inset: auto 0 calc(var(--hit) - 2px);
   height: 2px;
   background: var(--pop);
   transform: scaleX(0);
@@ -179,7 +189,7 @@ const links = [
 }
 
 .tool {
-  padding: 0;
+  padding-inline: 0;
   border: 0;
   background: none;
   cursor: pointer;

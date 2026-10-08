@@ -16,6 +16,7 @@ const en = {
   factLatest: 'Latest project',
   factAvailable: 'Available',
   factBasedIn: 'Based in',
+  factEmail: 'Email',
 
   projectsTitle: 'Projects',
   projectsNote: 'Each one with what was hard and how I solved it.',
@@ -27,11 +28,18 @@ const en = {
   experience: 'Experience',
   education: 'Education',
   languages: 'Languages',
+  worksWith: 'Works with',
   downloadCv: 'Download CV (PDF)',
   portraitAlt: 'Portrait of Julian van der Linde',
 
   contactAsk:
     'Looking for an intern or junior software engineer? Email is the quickest way to reach me.',
+
+  contactCopy: 'Copy address',
+  contactCopied: 'Copied',
+  contactCopiedLong: 'The email address is on your clipboard.',
+  contactCopyFailed: 'Copying did not work here. Select the address above to copy it.',
+  newTab: 'opens in a new tab',
 
   projectBack: 'All projects',
   projectRole: 'Role',
@@ -73,6 +81,7 @@ const nl: typeof en = {
   factLatest: 'Nieuwste project',
   factAvailable: 'Beschikbaar',
   factBasedIn: 'Locatie',
+  factEmail: 'E-mail',
 
   projectsTitle: 'Projecten',
   projectsNote: 'Elk met wat er lastig was en hoe ik het oploste.',
@@ -84,11 +93,18 @@ const nl: typeof en = {
   experience: 'Werkervaring',
   education: 'Opleiding',
   languages: 'Talen',
+  worksWith: 'Werkt met',
   downloadCv: 'Download cv (pdf)',
   portraitAlt: 'Portret van Julian van der Linde',
 
   contactAsk:
     'Op zoek naar een stagiair of junior software engineer? Mail is de snelste manier om mij te bereiken.',
+
+  contactCopy: 'Kopieer adres',
+  contactCopied: 'Gekopieerd',
+  contactCopiedLong: 'Het e-mailadres staat op je klembord.',
+  contactCopyFailed: 'Kopiëren lukte hier niet. Selecteer het adres hierboven om het te kopiëren.',
+  newTab: 'opent in een nieuw tabblad',
 
   projectBack: 'Alle projecten',
   projectRole: 'Rol',

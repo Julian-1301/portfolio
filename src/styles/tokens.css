@@ -56,6 +56,8 @@
   --space-32: 128px;
 
   --nav-h: 57px;
+  /* extra hit area around small text links, so taps land (24px text + 2x10px = 44px) */
+  --hit: 10px;
   --gutter: clamp(16px, 3vw, 40px);
   --col-gap: clamp(12px, 1.6vw, 24px);
   --measure: 38ch;

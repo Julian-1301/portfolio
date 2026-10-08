@@ -41,7 +41,7 @@ const isStrip = computed(() => props.media.layout === 'phones')
         :href="zoomable ? imageUrl(slug, image.file) : undefined"
         :target="zoomable ? '_blank' : undefined"
         :rel="zoomable ? 'noopener' : undefined"
-        :aria-label="zoomable ? `${t('mediaOpen')}: ${l(image.alt)}` : undefined"
+        :aria-label="zoomable ? `${t('mediaOpen')}: ${l(image.alt)} (${t('newTab')})` : undefined"
       >
         <picture>
           <source
@@ -88,7 +88,26 @@ picture {
 }
 
 a.shot {
+  position: relative;
   cursor: zoom-in;
+}
+
+/*
+  The frame clips anything outside it, so a focused screen gets its ring drawn inside, in two
+  layers: light against the dark mat, dark against the screenshot. One always stands out.
+*/
+a.shot:focus-visible {
+  outline: none;
+}
+
+a.shot:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset 0 0 0 3px var(--mat-ink),
+    inset 0 0 0 6px var(--mat);
+  pointer-events: none;
 }
 
 /* one wide image */

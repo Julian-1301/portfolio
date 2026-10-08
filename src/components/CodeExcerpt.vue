@@ -62,6 +62,7 @@ code {
 }
 
 figcaption {
+  max-width: 70ch;
   margin-top: var(--space-2);
   color: var(--muted);
   font-size: var(--step--1);

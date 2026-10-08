@@ -23,9 +23,14 @@ export function useOverField(bar: Ref<HTMLElement | null>) {
     if (!frame) frame = requestAnimationFrame(measure)
   }
 
+  // a lazily loaded page renders after the route changes, so measure again whenever the content resizes
+  let observer: ResizeObserver | undefined
+
   onMounted(() => {
     window.addEventListener('scroll', schedule, { passive: true })
     window.addEventListener('resize', schedule)
+    observer = new ResizeObserver(schedule)
+    observer.observe(document.body)
     schedule()
   })
 
@@ -37,6 +42,7 @@ export function useOverField(bar: Ref<HTMLElement | null>) {
   )
 
   onBeforeUnmount(() => {
+    observer?.disconnect()
     window.removeEventListener('scroll', schedule)
     window.removeEventListener('resize', schedule)
     cancelAnimationFrame(frame)

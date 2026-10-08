@@ -7,12 +7,21 @@ export interface TimelineEntry {
   role: Localized
   place: string
   year: Localized
+  /** One plain line about what he did there. */
+  note?: Localized
 }
 
 export interface LanguageEntry {
   name: Localized
   level: Localized
   cefr: string
+  note?: Localized
+}
+
+/** A group of tools in the "Works with" list. */
+export interface SkillGroup {
+  label: Localized
+  items: string[]
 }
 
 export interface Site {
@@ -35,6 +44,7 @@ export interface Site {
   experience: TimelineEntry[]
   education: TimelineEntry[]
   languages: LanguageEntry[]
+  skills: SkillGroup[]
 }
 
 const same = (text: string): Localized => ({ en: text, nl: text })
@@ -70,26 +80,38 @@ export const site: Site = {
       nl: 'Ik studeer Software Engineering aan de Hogeschool van Amsterdam en deed een uitwisselingssemester aan de University of Michigan School of Information.',
     },
     {
-      en: 'My work sits between design and engineering. I design interfaces, build them, and I have a research interest in privacy and the ethics of emerging technology.',
-      nl: 'Mijn werk zit tussen design en engineering in. Ik ontwerp interfaces, bouw ze, en ik doe graag onderzoek naar privacy en de ethiek van nieuwe technologie.',
+      en: 'My focus is software development and data analysis. At Effytool I built backend features in C#, and in a hospital and a care organisation I learned to explain technology to the people who use it every day.',
+      nl: 'Mijn focus is softwareontwikkeling en data-analyse. Bij Effytool bouwde ik backendfeatures in C#, en in een ziekenhuis en een zorgorganisatie leerde ik techniek uit te leggen aan de mensen die er elke dag mee werken.',
     },
   ],
 
   experience: [
     {
-      role: { en: 'Software developer intern', nl: 'Stagiair software developer' },
+      role: { en: 'Software Developer Intern', nl: 'Stagiair softwareontwikkeling' },
       place: 'Effytool',
       year: same('2025'),
+      note: {
+        en: 'Built and maintained backend features in C#, and tested and debugged them with the team.',
+        nl: 'Bouwde en onderhield backendfeatures in C#, en testte en debugde ze met het team.',
+      },
     },
     {
-      role: { en: 'IT infrastructure management', nl: 'IT-infrastructuurbeheer' },
+      role: { en: 'IT Workplace Technician', nl: 'IT-werkplektechnicus' },
       place: 'Dijklander Ziekenhuis',
       year: same('2023'),
+      note: {
+        en: 'Replaced and managed workplace hardware and handled support tickets for healthcare staff.',
+        nl: 'Verving en beheerde werkplekhardware en handelde supporttickets af voor zorgmedewerkers.',
+      },
     },
     {
-      role: { en: 'Technical support', nl: 'Technische ondersteuning' },
+      role: { en: 'IT Support Specialist', nl: 'IT-supportmedewerker' },
       place: 'De Zorgcirkel',
       year: same('2022'),
+      note: {
+        en: 'Guided staff through the move to a new intranet and Office 365, with hands-on support and training.',
+        nl: 'Begeleidde medewerkers bij de overstap naar een nieuw intranet en Office 365, met praktische hulp en training.',
+      },
     },
   ],
   education: [
@@ -103,6 +125,11 @@ export const site: Site = {
       place: 'Amsterdam UAS',
       year: { en: '2023 to now', nl: '2023 tot nu' },
     },
+    {
+      role: same('VWO'),
+      place: 'Da Vinci College',
+      year: { en: '2016 to 2022', nl: '2016 tot 2022' },
+    },
   ],
   languages: [
     {
@@ -110,7 +137,30 @@ export const site: Site = {
       level: { en: 'Native', nl: 'Moedertaal' },
       cefr: 'C2',
     },
-    { name: { en: 'English', nl: 'Engels' }, level: { en: 'Fluent', nl: 'Vloeiend' }, cefr: 'C2' },
+    {
+      name: { en: 'English', nl: 'Engels' },
+      level: { en: 'Fluent', nl: 'Vloeiend' },
+      cefr: 'C2',
+      note: {
+        en: 'Cambridge Certificate in Advanced English (CAE), 2020',
+        nl: 'Cambridge Certificate in Advanced English (CAE), 2020',
+      },
+    },
     { name: { en: 'German', nl: 'Duits' }, level: { en: 'Good', nl: 'Goed' }, cefr: 'B2' },
+  ],
+
+  skills: [
+    {
+      label: { en: 'Code', nl: 'Code' },
+      items: ['TypeScript', 'JavaScript', 'Java', 'C#', 'PHP', 'SQL', 'HTML', 'CSS'],
+    },
+    {
+      label: { en: 'Frameworks and tools', nl: 'Frameworks en tools' },
+      items: ['Vue', 'Vite', 'Spring Boot', 'Tailwind', 'REST APIs', 'Node.js data scripts'],
+    },
+    {
+      label: { en: 'Way of working', nl: 'Werkwijze' },
+      items: ['Scrum', 'Agile'],
+    },
   ],
 }

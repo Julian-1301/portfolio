@@ -19,7 +19,9 @@ watchEffect(() => {
       <div class="text">
         <h2>{{ t('notFoundTitle') }}</h2>
         <p>{{ t('notFoundBody') }}</p>
-        <RouterLink to="/">{{ t('notFoundHome') }} →</RouterLink>
+        <RouterLink to="/">
+          <span class="grow-line">{{ t('notFoundHome') }}</span> <span aria-hidden="true">→</span>
+        </RouterLink>
       </div>
     </div>
   </main>
@@ -57,8 +59,9 @@ p {
   max-width: var(--measure);
 }
 
+/* the same growing coral underline as every other link on the site */
 a {
-  border-bottom: 1px solid currentColor;
+  font-weight: 500;
 }
 
 @media (max-width: 860px) {

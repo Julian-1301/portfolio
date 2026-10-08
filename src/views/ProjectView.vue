@@ -54,13 +54,19 @@ watch(
           <dt>{{ t('projectRole') }}</dt>
           <dd>{{ l(project.role) }}</dd>
         </div>
-        <div class="fact">
+        <div class="fact context">
           <dt>{{ t('projectContext') }}</dt>
           <dd>{{ l(project.context) }}</dd>
         </div>
-        <div class="fact">
+        <div class="fact stack">
           <dt>{{ t('projectStack') }}</dt>
-          <dd>{{ project.stack.join(', ') }}</dd>
+          <!-- each tool stays on one line, so names like d3-geo never break at the hyphen -->
+          <dd>
+            <template v-for="(tool, i) in project.stack" :key="tool">
+              <span class="tool-name">{{ tool }}</span
+              ><template v-if="i < project.stack.length - 1">, </template>
+            </template>
+          </dd>
         </div>
         <div class="fact year">
           <dt>{{ t('projectYear') }}</dt>
@@ -71,7 +77,8 @@ watch(
           <dt>{{ t('projectCode') }}</dt>
           <dd>
             <a v-if="project.links.repo" :href="project.links.repo" target="_blank" rel="noopener">
-              <span class="grow-line">{{ t('projectRepo') }}</span> ↗
+              <span class="grow-line">{{ t('projectRepo') }}</span> <span aria-hidden="true">↗</span>
+              <span class="visually-hidden"> ({{ t('newTab') }})</span>
             </a>
             <span v-else class="soon">{{ t('projectCodeSoon') }}</span>
           </dd>
@@ -80,13 +87,12 @@ watch(
           <dt>{{ t('projectSite') }}</dt>
           <dd>
             <a :href="project.links.live" target="_blank" rel="noopener">
-              <span class="grow-line">{{ t('projectLive') }}</span> ↗
+              <span class="grow-line">{{ t('projectLive') }}</span> <span aria-hidden="true">↗</span>
+              <span class="visually-hidden"> ({{ t('newTab') }})</span>
             </a>
           </dd>
         </div>
       </dl>
-
-      <FigureRow v-if="project.figures" class="intro-figures" :figures="project.figures" />
     </header>
 
     <article class="case wrap">
@@ -100,12 +106,18 @@ watch(
         eager
       />
 
+      <!-- the numbers follow the picture, so the work itself is the first thing below the header -->
+      <FigureRow v-if="project.figures" class="case-figures" :figures="project.figures" />
+
       <!-- a map of the case study, so a reader looking for one part (the problems, the reflection) jumps there -->
       <nav class="chapters" :aria-label="t('projectChapters')">
         <ol>
+          <!-- plain anchors: RouterLink ignores the hash and would mark every chapter as the current page -->
           <li v-for="(section, i) in project.sections" :key="`toc-${project.slug}-${i}`">
-            <RouterLink :to="{ hash: `#chapter-${i}` }">
-              <span class="grow-line">{{ l(section.heading) }}</span>
+            <RouterLink v-slot="{ href, navigate }" :to="{ hash: `#chapter-${i}` }" custom>
+              <a :href="href" @click="navigate">
+                <span class="grow-line">{{ l(section.heading) }}</span>
+              </a>
             </RouterLink>
           </li>
         </ol>
@@ -161,11 +173,13 @@ watch(
 
 <style scoped>
 .intro {
-  padding-block: var(--space-8) var(--space-32);
+  padding-block: var(--space-8) var(--space-24);
 }
 
 .back {
   display: inline-block;
+  padding-block: var(--hit);
+  margin-block: calc(var(--hit) * -1);
   color: var(--muted);
   transition: color var(--dur-fast) var(--ease);
 }
@@ -206,32 +220,54 @@ watch(
   line-height: 1.35;
 }
 
-.fact {
-  grid-column: span 2;
+/*
+  The facts sit in a fixed block beside the summary: who, for what and when on the first row,
+  what it is built with and where the code is on the second. Every fact has its own cell.
+*/
+.summary {
+  grid-row: 1 / span 3;
 }
 
 .role {
-  grid-column: 6 / 8;
+  grid-column: 6 / 9;
+  grid-row: 1;
+}
+
+.context {
+  grid-column: 9 / 11;
+  grid-row: 1;
 }
 
 .year {
-  grid-column: 12 / 13;
+  grid-column: 11 / 13;
+  grid-row: 1;
+}
+
+.stack {
+  grid-column: 6 / 9;
+  grid-row: 2;
 }
 
 .code {
-  grid-column: 6 / 8;
+  grid-column: 9 / 13;
+  grid-row: 2;
 }
 
 .site {
-  grid-column: 8 / 10;
+  grid-column: 9 / 13;
+  grid-row: 3;
+}
+
+.tool-name {
+  white-space: nowrap;
 }
 
 .soon {
   color: var(--muted);
 }
 
-.intro-figures {
-  margin-top: var(--space-16);
+.case-figures {
+  margin-top: var(--space-12);
 }
 
 .case {
@@ -239,7 +275,7 @@ watch(
 }
 
 .cover {
-  margin-top: calc(var(--space-24) * -1);
+  margin-top: calc(var(--space-16) * -1);
 }
 
 .chapters {
@@ -376,16 +412,31 @@ watch(
 
 @media (max-width: 860px) {
   .summary,
-  .role,
-  .year,
   .chapter-title,
   .text {
     grid-column: 1 / -1;
     padding-right: 0;
   }
 
+  .summary,
+  .fact {
+    grid-row: auto;
+  }
+
   .fact {
     grid-column: span 6;
+  }
+
+  /* the long facts get the full width on a phone; the two short ones (context, year) pair up */
+  .facts {
+    grid-auto-flow: row dense;
+  }
+
+  .role,
+  .stack,
+  .code,
+  .site {
+    grid-column: 1 / -1;
   }
 
   .notes {
